@@ -18,7 +18,7 @@ const bookSchema = new mongoose.Schema({
         min:1,
         max:5
     },
-    users:{
+    user:{
         type: mongoose.Schema.Types.ObjectId,
         ref:"User",
         required:true
