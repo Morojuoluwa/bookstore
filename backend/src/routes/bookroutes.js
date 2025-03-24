@@ -1,4 +1,5 @@
 import express from "express"
+
 import cloudinary from "../lib/cloudinary"
 import protectRoute from "../middleware/auth.middleware.js"
 import Book from "../models/Book.js"
@@ -55,6 +56,16 @@ router.get("/", protectRoute, async(req,res)=>{
     }catch(error){
         console.log("Error in get all books route")
         res.status(500).json({message: "Internal server error"})
+    }
+})
+
+router.get("/user", protectRoute, async(req,res)=>{
+    try {
+        const books = await books.find({user:req.user._id}).sort({createdAt:-1})
+        res.json(books)
+    } catch (error) {
+        console.error("Get user books error:", error.message)
+        res.status(500).json({message:"Server error"})
     }
 })
 
